@@ -11,22 +11,45 @@ const ChatWidget = () => {
   const sendMessage = (e) => {
     e.preventDefault();
     if (input.trim()) {
-      setMessages([...messages, { text: input, sender: "user" }]);
+      setMessages([
+        ...messages,
+        { text: input, sender: "user", id: Date.now() },
+      ]);
       setInput("");
+
+      // Simulate response after 1 second
+      setTimeout(() => {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now(),
+            text: "Thanks for your message! This is a demo response.",
+            sender: "support",
+          },
+        ]);
+      }, 2000);
     }
   };
 
   return (
-    <div className="chat-widget">
-      <button className="chat-toggle" onClick={toggleChat}>
-        {isOpen ? "Close" : "Chat"}
-      </button>
+    <div className="chat-widget-container">
+      {!isOpen && (
+        <button className="chat-toggle" onClick={toggleChat}>
+          💬 Chat
+        </button>
+      )}
       {isOpen && (
-        <div className="chat-box">
+        <div className="chat-widget" style={isOpen ? { bottom: 20 } : {}}>
+          <div className="chat-header">
+            <h4>Support</h4>
+            <button className="chat-close" onClick={toggleChat}>
+              ✖
+            </button>
+          </div>
           <div className="chat-messages">
             {messages.map((msg, index) => (
               <div key={index} className={`message ${msg.sender}`}>
-                {msg.text}
+                <span>{msg.text}</span>
               </div>
             ))}
           </div>
@@ -35,11 +58,11 @@ const ChatWidget = () => {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Type a message"
+              placeholder="Type a message..."
               className="chat-input"
             />
             <button type="submit" className="chat-send">
-              Send
+              ➤
             </button>
           </form>
         </div>
