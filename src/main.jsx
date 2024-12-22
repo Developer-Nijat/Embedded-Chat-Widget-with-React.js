@@ -1,14 +1,13 @@
 import { createRoot } from "react-dom/client";
-import ChatWidget from "./components/chat-widget/ChatWidget";
+import ChatWidget from "./components/chat-widget/ChatWidget.jsx";
 
-// createRoot(document.getElementById("chat-widget-root")).render(<ChatWidget />);
+createRoot(document.getElementById("chat-widget")).render(<ChatWidget />);
 
-const createChatWidget = () => {
-  const container = document.createElement("div");
-  container.id = "chat-widget-root";
-  document.body.appendChild(container);
+// const createChaWidget = () => {
+//   const root = document.createElement("div");
+//   root.id = "chat-widget";
+//   document.body.appendChild(root);
+//   createRoot(root).render(<ChatWidget />);
+// };
 
-  createRoot(container).render(<ChatWidget />);
-};
-
-window.createChatWidget = createChatWidget;
+// window.createChaWidget = createChaWidget;
